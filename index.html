@@ -1,0 +1,1541 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Wolof Jàng — Infirmière Puéricultrice</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Nunito:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #1A1008;
+  --surface: #231608;
+  --surface2: #2E1E0A;
+  --surface3: #3A2510;
+  --border: rgba(255,180,60,0.12);
+  --border2: rgba(255,180,60,0.25);
+  --text: #F5E8CC;
+  --muted: #A08860;
+  --accent: #E07B20;
+  --accent-light: rgba(224,123,32,0.15);
+  --green: #3A8C5C;
+  --green-light: rgba(58,140,92,0.15);
+  --blue: #2A6FA8;
+  --blue-light: rgba(42,111,168,0.15);
+  --red: #C04040;
+  --red-light: rgba(192,64,64,0.15);
+  --gold: #F0C060;
+  --gold-dim: rgba(240,192,96,0.1);
+  --radius: 10px;
+  --radius-lg: 16px;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: 'Nunito', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+/* Subtle pattern overlay */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: radial-gradient(circle at 20% 20%, rgba(224,123,32,0.04) 0%, transparent 50%),
+                    radial-gradient(circle at 80% 80%, rgba(58,140,92,0.04) 0%, transparent 50%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* HEADER */
+.header {
+  background: var(--surface);
+  border-bottom: 1px solid var(--border2);
+  padding: 0 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 64px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+.logo {
+  font-family: 'Playfair Display', serif;
+  font-size: 22px;
+  letter-spacing: -0.3px;
+  color: var(--text);
+}
+.logo span { color: var(--accent); }
+.logo-sub { font-size: 11px; color: var(--muted); letter-spacing: 0.08em; text-transform: uppercase; margin-top: 1px; }
+.header-badge {
+  font-size: 11px;
+  padding: 5px 12px;
+  border-radius: 20px;
+  border: 1px solid var(--border2);
+  color: var(--muted);
+  letter-spacing: 0.05em;
+}
+
+/* LAYOUT */
+.app { display: flex; min-height: calc(100vh - 64px); position: relative; z-index: 1; }
+
+/* SIDEBAR */
+.sidebar {
+  width: 248px;
+  min-width: 248px;
+  background: var(--surface);
+  border-right: 1px solid var(--border);
+  padding: 1.5rem 0;
+  position: sticky;
+  top: 64px;
+  height: calc(100vh - 64px);
+  overflow-y: auto;
+}
+.sidebar-section { padding: 0 1rem; margin-bottom: 1.5rem; }
+.sidebar-label {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 0.5rem;
+  padding-left: 0.5rem;
+  opacity: 0.7;
+}
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 12px;
+  border-radius: var(--radius);
+  cursor: pointer;
+  font-size: 14px;
+  color: var(--muted);
+  transition: all 0.15s;
+  margin-bottom: 2px;
+  border: 1px solid transparent;
+}
+.nav-item:hover { background: var(--surface2); color: var(--text); }
+.nav-item.active {
+  background: var(--accent-light);
+  color: var(--accent);
+  border-color: rgba(224,123,32,0.2);
+}
+.nav-icon { font-size: 15px; flex-shrink: 0; }
+
+.progress-mini { background: var(--surface2); border: 1px solid var(--border); border-radius: var(--radius); padding: 14px; margin: 0 1rem 1.5rem; }
+.progress-mini-label { font-size: 12px; color: var(--muted); margin-bottom: 8px; }
+.progress-bar-wrap { background: var(--border2); border-radius: 4px; height: 5px; overflow: hidden; }
+.progress-bar-fill { height: 100%; background: var(--accent); border-radius: 4px; transition: width 0.4s ease; }
+.progress-mini-stats { display: flex; justify-content: space-between; margin-top: 6px; }
+.progress-mini-stat { font-size: 11px; color: var(--muted); }
+.progress-mini-stat strong { color: var(--text); }
+
+/* MAIN */
+.main { flex: 1; overflow-y: auto; }
+
+/* PAGES */
+.page { display: none; padding: 2rem; max-width: 920px; }
+.page.active { display: block; }
+
+.page-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 28px;
+  margin-bottom: 0.25rem;
+  color: var(--text);
+}
+.page-subtitle { color: var(--muted); font-size: 14px; margin-bottom: 2rem; }
+
+/* CARDS */
+.card {
+  background: var(--surface);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border);
+  padding: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+/* PHASE CARDS */
+.phase-card {
+  background: var(--surface);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border);
+  overflow: hidden;
+  margin-bottom: 1.25rem;
+  transition: border-color 0.2s;
+}
+.phase-card:hover { border-color: var(--border2); }
+.phase-header-bar {
+  padding: 1rem 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border-bottom: 1px solid var(--border);
+}
+.phase-badge { font-size: 11px; font-weight: 600; padding: 4px 12px; border-radius: 20px; letter-spacing: 0.05em; }
+.phase-title-text { font-weight: 600; font-size: 15px; color: var(--text); }
+.phase-duration { margin-left: auto; font-size: 12px; color: var(--muted); }
+.phase-body { padding: 1.25rem 1.5rem; }
+.phase-modules { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 1rem; }
+.module-mini { background: var(--surface2); border: 1px solid var(--border); border-radius: var(--radius); padding: 12px; }
+.module-mini-name { font-weight: 600; font-size: 13px; margin-bottom: 4px; color: var(--text); }
+.module-mini-desc { font-size: 12px; color: var(--muted); line-height: 1.5; }
+.tags-row { display: flex; flex-wrap: wrap; gap: 6px; margin: 10px 0; }
+.tag { font-size: 12px; padding: 3px 10px; border-radius: 20px; }
+.tag-q { background: rgba(255,255,255,0.05); color: var(--muted); border: 1px solid var(--border2); }
+.tag-v { background: var(--blue-light); color: #6AAFE0; border: 1px solid rgba(42,111,168,0.3); }
+.tag-m { background: var(--green-light); color: #6AC494; border: 1px solid rgba(58,140,92,0.3); }
+.milestone-box { background: rgba(224,123,32,0.1); border: 1px solid rgba(224,123,32,0.2); border-radius: var(--radius); padding: 12px 14px; font-size: 13px; color: var(--gold); margin-top: 1rem; }
+
+/* PHONETICS SPECIAL */
+.phonetics-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 1.5rem; }
+.phon-card {
+  background: var(--surface2);
+  border: 1px solid var(--border2);
+  border-radius: var(--radius);
+  padding: 14px;
+  text-align: center;
+}
+.phon-sound { font-size: 28px; font-weight: 600; color: var(--accent); font-family: 'Playfair Display', serif; margin-bottom: 4px; }
+.phon-name { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 6px; }
+.phon-tip { font-size: 12px; color: var(--text); opacity: 0.8; }
+.phon-ex { font-size: 12px; color: var(--gold); font-style: italic; margin-top: 4px; }
+
+/* VOCAB */
+.vocab-category {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin: 1.5rem 0 0.75rem;
+  padding-bottom: 6px;
+  border-bottom: 1px solid var(--border);
+}
+.vocab-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; }
+.vocab-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 12px 14px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.vocab-card:hover { border-color: var(--accent); background: var(--accent-light); }
+.vocab-card.known { border-color: var(--green); background: var(--green-light); }
+.vocab-card.known .vocab-wol { color: #6AC494; }
+.vocab-wol { font-weight: 700; font-size: 15px; color: var(--accent); }
+.vocab-pron { font-size: 11px; color: var(--gold); font-style: italic; margin-bottom: 2px; }
+.vocab-fr { font-size: 13px; color: var(--muted); }
+.vocab-ex { font-size: 12px; color: var(--green-light); color: rgba(106,196,148,0.8); font-style: italic; margin-top: 2px; }
+.vocab-check { width: 20px; height: 20px; border-radius: 50%; border: 1.5px solid var(--border2); flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 10px; transition: all 0.15s; color: var(--muted); }
+.vocab-card.known .vocab-check { background: var(--green); border-color: var(--green); color: white; }
+
+/* FLASHCARD */
+.flashcard-wrap { display: flex; flex-direction: column; align-items: center; gap: 1.5rem; }
+.flashcard-scene { width: 100%; max-width: 520px; height: 280px; perspective: 1000px; cursor: pointer; }
+.flashcard-inner {
+  width: 100%; height: 100%;
+  transition: transform 0.6s cubic-bezier(.4,.2,.2,1);
+  transform-style: preserve-3d;
+  position: relative;
+}
+.flashcard-scene.flipped .flashcard-inner { transform: rotateY(180deg); }
+.flashcard-face {
+  position: absolute; width: 100%; height: 100%;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  border-radius: var(--radius-lg);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  text-align: center;
+  border: 1px solid var(--border2);
+}
+.flashcard-front { background: var(--surface2); }
+.flashcard-back { background: var(--surface3); transform: rotateY(180deg); }
+.fc-cat { font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); margin-bottom: 0.75rem; }
+.fc-word { font-family: 'Playfair Display', serif; font-size: 38px; color: var(--accent); margin-bottom: 0.35rem; }
+.fc-pron { font-size: 14px; color: var(--gold); font-style: italic; margin-bottom: 0.25rem; }
+.fc-hint { font-size: 12px; color: var(--muted); }
+.fc-click { font-size: 12px; color: var(--muted); margin-top: 1rem; opacity: 0.5; }
+.fc-translation { font-family: 'Playfair Display', serif; font-size: 22px; color: var(--text); margin-bottom: 0.5rem; }
+.fc-example { font-size: 13px; font-style: italic; color: var(--accent); }
+.fc-example-fr { font-size: 12px; color: var(--muted); margin-top: 4px; }
+.fc-controls { display: flex; gap: 10px; }
+.fc-progress-wrap { display: flex; align-items: center; gap: 12px; font-size: 13px; color: var(--muted); }
+.fc-dots { display: flex; gap: 4px; }
+.fc-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--border2); transition: background 0.2s; }
+.fc-dot.done { background: var(--green); }
+.fc-dot.current { background: var(--accent); }
+
+/* BUTTONS */
+.btn {
+  padding: 10px 18px;
+  border-radius: var(--radius);
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  border: 1px solid var(--border2);
+  background: var(--surface2);
+  color: var(--text);
+  transition: all 0.15s;
+  font-family: 'Nunito', sans-serif;
+}
+.btn:hover { background: var(--surface3); border-color: var(--accent); }
+.btn-primary { background: var(--accent); color: white; border-color: var(--accent); }
+.btn-primary:hover { background: #c96d18; }
+.btn-success { background: var(--green-light); color: #6AC494; border-color: rgba(58,140,92,0.3); }
+.btn-danger { background: var(--red-light); color: #E08080; border-color: rgba(192,64,64,0.3); }
+
+/* FILTER */
+.filter-bar { display: flex; gap: 8px; margin-bottom: 1.25rem; flex-wrap: wrap; }
+.filter-btn {
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 13px;
+  cursor: pointer;
+  border: 1px solid var(--border2);
+  background: var(--surface2);
+  color: var(--muted);
+  transition: all 0.15s;
+  font-family: 'Nunito', sans-serif;
+}
+.filter-btn:hover { color: var(--text); border-color: var(--accent); }
+.filter-btn.active { background: var(--accent); color: white; border-color: var(--accent); }
+
+/* GRAMMAR */
+.grammar-rule { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); margin-bottom: 1rem; overflow: hidden; }
+.grammar-rule-header {
+  padding: 14px 18px;
+  display: flex; align-items: center; justify-content: space-between;
+  cursor: pointer; user-select: none;
+  transition: background 0.15s;
+}
+.grammar-rule-header:hover { background: var(--surface2); }
+.grammar-rule-title { font-weight: 600; font-size: 14px; display: flex; align-items: center; gap: 10px; color: var(--text); }
+.grammar-rule-body { padding: 0 18px 18px; border-top: 1px solid var(--border); display: none; }
+.grammar-rule.open .grammar-rule-body { display: block; }
+.chevron { transition: transform 0.2s; color: var(--muted); }
+.grammar-rule.open .chevron { transform: rotate(180deg); }
+
+.table-small { width: 100%; border-collapse: collapse; font-size: 13px; margin: 12px 0; }
+.table-small th { text-align: left; padding: 7px 10px; background: var(--surface2); font-weight: 600; font-size: 12px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.05em; }
+.table-small td { padding: 8px 10px; border-bottom: 1px solid var(--border); color: var(--text); }
+.table-small tr:last-child td { border-bottom: none; }
+.hl { color: var(--accent); font-weight: 600; }
+.hl-g { color: #6AC494; font-weight: 600; }
+.hl-b { color: #6AAFE0; font-weight: 600; }
+
+.note-box {
+  background: var(--blue-light);
+  border: 1px solid rgba(42,111,168,0.2);
+  border-radius: var(--radius);
+  padding: 12px 14px;
+  font-size: 13px;
+  color: #6AAFE0;
+  margin-top: 10px;
+  line-height: 1.6;
+}
+.tip-box {
+  background: var(--accent-light);
+  border: 1px solid rgba(224,123,32,0.2);
+  border-radius: var(--radius);
+  padding: 12px 14px;
+  font-size: 13px;
+  color: var(--gold);
+  margin-top: 10px;
+  line-height: 1.6;
+}
+
+/* ROLEPLAYS */
+.roleplay-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); margin-bottom: 1rem; overflow: hidden; }
+.roleplay-header { padding: 1rem 1.25rem; display: flex; align-items: center; gap: 12px; border-bottom: 1px solid var(--border); }
+.roleplay-icon { font-size: 22px; }
+.roleplay-title { font-weight: 600; font-size: 14px; color: var(--text); }
+.roleplay-body { padding: 1rem 1.25rem; }
+.dialogue { display: flex; flex-direction: column; gap: 10px; }
+.dialogue-line { display: flex; gap: 10px; font-size: 13px; }
+.dialogue-speaker { font-weight: 700; font-size: 11px; min-width: 80px; padding-top: 2px; text-transform: uppercase; letter-spacing: 0.06em; }
+.dialogue-speaker.nurse { color: var(--accent); }
+.dialogue-speaker.parent { color: #6AAFE0; }
+.dialogue-speaker.sys { color: var(--gold); }
+.dialogue-content .wol { color: var(--text); font-size: 14px; margin-bottom: 2px; }
+.dialogue-content .trans { color: var(--muted); font-style: italic; font-size: 12px; }
+.dialogue-content .pron { color: var(--gold); font-size: 11px; font-style: italic; }
+.vocab-key { margin-top: 12px; padding: 10px 14px; background: var(--accent-light); border-radius: var(--radius); font-size: 13px; color: var(--gold); border: 1px solid rgba(224,123,32,0.15); }
+
+/* QUIZ */
+.quiz-wrap { max-width: 580px; }
+.quiz-question {
+  font-family: 'Playfair Display', serif;
+  font-size: 22px;
+  margin-bottom: 1.5rem;
+  line-height: 1.3;
+  color: var(--text);
+}
+.quiz-options { display: flex; flex-direction: column; gap: 8px; margin-bottom: 1.5rem; }
+.quiz-option {
+  padding: 13px 18px;
+  border-radius: var(--radius);
+  border: 1px solid var(--border2);
+  background: var(--surface2);
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.15s;
+  text-align: left;
+  font-family: 'Nunito', sans-serif;
+  color: var(--text);
+}
+.quiz-option:hover { border-color: var(--accent); background: var(--accent-light); }
+.quiz-option.correct { border-color: var(--green); background: var(--green-light); color: #6AC494; pointer-events: none; }
+.quiz-option.wrong { border-color: var(--red); background: var(--red-light); color: #E08080; pointer-events: none; }
+.quiz-option.disabled { pointer-events: none; opacity: 0.5; }
+.quiz-feedback { padding: 12px 16px; border-radius: var(--radius); font-size: 13px; margin-bottom: 1rem; display: none; }
+.quiz-feedback.correct-fb { background: var(--green-light); border: 1px solid rgba(58,140,92,0.2); color: #6AC494; display: block; }
+.quiz-feedback.wrong-fb { background: var(--red-light); border: 1px solid rgba(192,64,64,0.2); color: #E08080; display: block; }
+.quiz-score-line { font-size: 13px; color: var(--muted); margin-bottom: 1rem; }
+.quiz-score-line strong { color: var(--text); }
+
+/* PLANNING */
+.streak-banner {
+  background: var(--surface2);
+  border: 1px solid var(--border2);
+  border-radius: var(--radius-lg);
+  padding: 1.25rem 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+.streak-num { font-family: 'Playfair Display', serif; font-size: 44px; color: var(--accent); line-height: 1; }
+.streak-label { font-size: 13px; color: var(--muted); }
+.streak-title { font-size: 15px; font-weight: 600; color: var(--text); }
+.week-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 8px; margin-bottom: 1.5rem; }
+.day-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 10px 6px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.day-card:hover { border-color: var(--accent); }
+.day-card.completed { border-color: var(--green); background: var(--green-light); }
+.day-name { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); margin-bottom: 6px; }
+.day-icon { font-size: 18px; margin-bottom: 4px; }
+.day-activity { font-size: 11px; color: var(--muted); line-height: 1.3; }
+.day-card.completed .day-name, .day-card.completed .day-activity { color: #6AC494; }
+
+/* RESOURCES */
+.resource-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.resource-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 14px; display: flex; gap: 12px; align-items: flex-start; transition: border-color 0.15s; }
+.resource-card:hover { border-color: var(--border2); }
+.resource-icon { font-size: 22px; flex-shrink: 0; }
+.resource-name { font-weight: 700; font-size: 14px; margin-bottom: 3px; color: var(--text); }
+.resource-desc { font-size: 12px; color: var(--muted); line-height: 1.5; }
+.resource-badge { font-size: 11px; padding: 2px 8px; border-radius: 20px; margin-top: 6px; display: inline-block; }
+
+.divider { border: none; border-top: 1px solid var(--border); margin: 1.5rem 0; }
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 3px; }
+</style>
+</head>
+<body>
+
+<header class="header">
+  <div>
+    <div class="logo">Wolof <span>Jàng</span></div>
+    <div class="logo-sub">Apprendre · Soigner · Voyager</div>
+  </div>
+  <div class="header-badge">Infirmière Puéricultrice · B1 cible</div>
+</header>
+
+<div class="app">
+
+<!-- SIDEBAR -->
+<aside class="sidebar">
+  <div class="progress-mini">
+    <div class="progress-mini-label">Progression globale</div>
+    <div class="progress-bar-wrap">
+      <div class="progress-bar-fill" id="global-progress" style="width:5%"></div>
+    </div>
+    <div class="progress-mini-stats">
+      <div class="progress-mini-stat">Mots : <strong id="known-count">0</strong>/200</div>
+      <div class="progress-mini-stat">Phase <strong id="current-phase">1</strong>/3</div>
+    </div>
+  </div>
+
+  <div class="sidebar-section">
+    <div class="sidebar-label">Navigation</div>
+    <div class="nav-item active" data-page="accueil"><span class="nav-icon">🏠</span> Accueil & Plan</div>
+    <div class="nav-item" data-page="phonetique"><span class="nav-icon">🔊</span> Phonétique</div>
+    <div class="nav-item" data-page="vocabulaire"><span class="nav-icon">📚</span> Vocabulaire</div>
+    <div class="nav-item" data-page="flashcards"><span class="nav-icon">🃏</span> Flashcards</div>
+    <div class="nav-item" data-page="grammaire"><span class="nav-icon">📐</span> Grammaire</div>
+    <div class="nav-item" data-page="roleplays"><span class="nav-icon">👶</span> Jeux de rôle</div>
+    <div class="nav-item" data-page="quiz"><span class="nav-icon">🎯</span> Quiz</div>
+    <div class="nav-item" data-page="planning"><span class="nav-icon">📅</span> Planning</div>
+    <div class="nav-item" data-page="ressources"><span class="nav-icon">🔗</span> Ressources</div>
+  </div>
+
+  <div class="sidebar-section">
+    <div class="sidebar-label">Contextes</div>
+    <div style="display:flex;flex-direction:column;gap:6px;padding-left:4px;">
+      <div style="display:flex;align-items:center;gap:8px;font-size:13px;color:var(--muted);">
+        <span style="width:9px;height:9px;border-radius:50%;background:var(--border2);flex-shrink:0;"></span>Quotidien
+      </div>
+      <div style="display:flex;align-items:center;gap:8px;font-size:13px;color:var(--muted);">
+        <span style="width:9px;height:9px;border-radius:50%;background:var(--blue-light);border:1px solid rgba(42,111,168,0.4);flex-shrink:0;"></span>Voyage / Humanitaire
+      </div>
+      <div style="display:flex;align-items:center;gap:8px;font-size:13px;color:var(--muted);">
+        <span style="width:9px;height:9px;border-radius:50%;background:var(--green-light);border:1px solid rgba(58,140,92,0.4);flex-shrink:0;"></span>Médical pédiatrique
+      </div>
+    </div>
+  </div>
+</aside>
+
+<main class="main">
+
+<!-- ACCUEIL -->
+<div class="page active" id="page-accueil">
+  <div class="page-title">Plan d'apprentissage</div>
+  <div class="page-subtitle">Wolof · Niveau conversationnel B1 · Sénégal & Afrique de l'Ouest · Médical pédiatrique</div>
+
+  <div class="card" style="background:var(--surface2);border-color:var(--border2);margin-bottom:1.5rem;">
+    <div style="font-size:14px;color:var(--text);line-height:1.7;">
+      🌍 <strong style="color:var(--accent);">Pourquoi le wolof ?</strong> Langue nationale du Sénégal, parlée par ~90% de la population (même par les non-Wolofs). Indispensable pour toute mission humanitaire, coopération médicale ou poste en Afrique de l'Ouest francophone. Le wolof n'a <strong>pas de genre grammatical</strong>, pas de conjugaison complexe — plus accessible que l'arabe ou le mandingue.
+    </div>
+  </div>
+
+  <!-- Phase 1 -->
+  <div class="phase-card">
+    <div class="phase-header-bar">
+      <div class="phase-badge" style="background:rgba(224,123,32,0.15);color:var(--accent);border:1px solid rgba(224,123,32,0.3);">Phase 1</div>
+      <div class="phase-title-text">Fondations — sons, salutations et survie</div>
+      <div class="phase-duration">Mois 1–2 · ~30 min/jour</div>
+    </div>
+    <div class="phase-body">
+      <div class="phase-modules">
+        <div class="module-mini">
+          <div class="module-mini-name">🔊 Phonétique</div>
+          <div class="module-mini-desc">Sons spéciaux : ñ, ng, x (comme jota espagnol), consonnes prénasalisées mb, nd, ng</div>
+        </div>
+        <div class="module-mini">
+          <div class="module-mini-name">👋 Salutations rituelles</div>
+          <div class="module-mini-desc">Les salutations longues sont un rituel social essentiel — ne jamais les sauter</div>
+        </div>
+        <div class="module-mini">
+          <div class="module-mini-name">🔢 Structure de base</div>
+          <div class="module-mini-desc">Pas de genre, pas d'articles définis, verbes simples, ordre SOV/SVO flexible</div>
+        </div>
+      </div>
+      <div class="tags-row">
+        <span class="tag tag-q">Salutations (nanga def ?)</span>
+        <span class="tag tag-q">Se présenter</span>
+        <span class="tag tag-q">Famille & enfants</span>
+        <span class="tag tag-q">Nombres & prix</span>
+        <span class="tag tag-v">Arrivée à Dakar</span>
+        <span class="tag tag-v">Transport (taxi, car rapide)</span>
+        <span class="tag tag-m">Corps humain (yaram)</span>
+        <span class="tag tag-m">Douleur (dafa daw)</span>
+      </div>
+      <div class="milestone-box">🎯 <strong>Objectif :</strong> Saluer correctement, se présenter comme infirmière (Maa ngi tuddu... / Infirmière laa), compter, demander le chemin. Vocabulaire actif : ~300 mots.</div>
+    </div>
+  </div>
+
+  <!-- Phase 2 -->
+  <div class="phase-card">
+    <div class="phase-header-bar">
+      <div class="phase-badge" style="background:var(--green-light);color:#6AC494;border:1px solid rgba(58,140,92,0.3);">Phase 2</div>
+      <div class="phase-title-text">Consolidation — vie quotidienne & interactions réelles</div>
+      <div class="phase-duration">Mois 3–5 · ~45 min/jour</div>
+    </div>
+    <div class="phase-body">
+      <div class="phase-modules">
+        <div class="module-mini">
+          <div class="module-mini-name">🏘️ Vie au Sénégal</div>
+          <div class="module-mini-desc">Marché, mosquée, quartier, transport, repas (thiéboudienne, yassa)</div>
+        </div>
+        <div class="module-mini">
+          <div class="module-mini-name">⏰ Passé & futur</div>
+          <div class="module-mini-desc">Marqueurs temporels (démb = hier, ëllëg = demain), aspect verbal</div>
+        </div>
+        <div class="module-mini">
+          <div class="module-mini-name">🤝 Codes culturels</div>
+          <div class="module-mini-desc">Teranga (hospitalité), respect des aînés, rôle de la famille dans les soins</div>
+        </div>
+      </div>
+      <div class="tags-row">
+        <span class="tag tag-q">Alimentation & eau</span>
+        <span class="tag tag-q">Religion & respect</span>
+        <span class="tag tag-q">Demander de l'aide</span>
+        <span class="tag tag-v">Structure sanitaire (poste de santé)</span>
+        <span class="tag tag-v">Urgence médicale terrain</span>
+        <span class="tag tag-m">Signes vitaux</span>
+        <span class="tag tag-m">Médicaments courants</span>
+        <span class="tag tag-m">Consultation nourrisson</span>
+        <span class="tag tag-m">Parler aux mères</span>
+      </div>
+      <div class="milestone-box">🎯 <strong>Objectif :</strong> Comprendre et se faire comprendre dans un centre de santé, conduire une anamnèse simple, expliquer un traitement à une mère. Vocabulaire actif : ~900 mots.</div>
+    </div>
+  </div>
+
+  <!-- Phase 3 -->
+  <div class="phase-card">
+    <div class="phase-header-bar">
+      <div class="phase-badge" style="background:var(--blue-light);color:#6AAFE0;border:1px solid rgba(42,111,168,0.3);">Phase 3</div>
+      <div class="phase-title-text">Spécialisation — pédiatrie & contexte humanitaire</div>
+      <div class="phase-duration">Mois 6–9 · ~60 min/jour</div>
+    </div>
+    <div class="phase-body">
+      <div class="phase-modules">
+        <div class="module-mini">
+          <div class="module-mini-name">👶 Pédiatrie locale</div>
+          <div class="module-mini-desc">Malnutrition, paludisme, diarrhée, déshydratation, vaccination PEV</div>
+        </div>
+        <div class="module-mini">
+          <div class="module-mini-name">🏥 Poste de santé</div>
+          <div class="module-mini-desc">Consultation prénatale, accouchement assisté, SMI, pesée mensuelle</div>
+        </div>
+        <div class="module-mini">
+          <div class="module-mini-name">🌿 Médecine & culture</div>
+          <div class="module-mini-desc">Médecine traditionnelle, gris-gris, confiance soignant-famille, décisions collectives</div>
+        </div>
+      </div>
+      <div class="tags-row">
+        <span class="tag tag-m">Malnutrition (xale bu tank)</span>
+        <span class="tag tag-m">Paludisme (sibiru)</span>
+        <span class="tag tag-m">Allaitement maternel</span>
+        <span class="tag tag-m">Vaccination (piquer)</span>
+        <span class="tag tag-m">Déshydratation (SRO)</span>
+        <span class="tag tag-m">Pesée & carnet de santé</span>
+        <span class="tag tag-v">ONG & coordination</span>
+        <span class="tag tag-v">Interprète communautaire</span>
+      </div>
+      <div class="milestone-box">🎯 <strong>Objectif :</strong> Mener une consultation pédiatrique complète, éduquer une mère sur la nutrition/vaccination, gérer une urgence palustre. Niveau conversationnel atteint.</div>
+    </div>
+  </div>
+</div>
+
+<!-- PHONÉTIQUE -->
+<div class="page" id="page-phonetique">
+  <div class="page-title">Phonétique du wolof</div>
+  <div class="page-subtitle">Sons spécifiques — essentiels avant tout apprentissage du vocabulaire</div>
+
+  <div class="card" style="background:var(--surface2);margin-bottom:1.5rem;">
+    <div style="font-size:14px;color:var(--text);line-height:1.7;">
+      Le wolof possède des sons absents du français. Les maîtriser dès le début évite de mauvaises habitudes difficiles à corriger. La bonne nouvelle : l'orthographe wolof est <strong style="color:var(--accent);">phonétique et régulière</strong> — on lit comme on écrit.
+    </div>
+  </div>
+
+  <div style="font-size:11px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);margin-bottom:1rem;">Sons distinctifs du wolof</div>
+  <div class="phonetics-grid">
+    <div class="phon-card">
+      <div class="phon-sound">ñ</div>
+      <div class="phon-name">N palatalisé</div>
+      <div class="phon-tip">Comme "gn" dans "agneau" en français</div>
+      <div class="phon-ex">ñaan = demander / ñibbi = retourner</div>
+    </div>
+    <div class="phon-card">
+      <div class="phon-sound">x</div>
+      <div class="phon-name">Fricative vélaire</div>
+      <div class="phon-tip">Comme le "j" espagnol ou "ch" allemand (Bach)</div>
+      <div class="phon-ex">xam = savoir / xale = enfant</div>
+    </div>
+    <div class="phon-card">
+      <div class="phon-sound">ng</div>
+      <div class="phon-name">Nasale vélaire</div>
+      <div class="phon-tip">Comme "ng" dans "parking" — peut être initial !</div>
+      <div class="phon-ex">ngor = dignité / ngoon = après-midi</div>
+    </div>
+    <div class="phon-card">
+      <div class="phon-sound">mb</div>
+      <div class="phon-name">Prénasale labiale</div>
+      <div class="phon-tip">"m" suivi immédiatement de "b" — une seule syllabe</div>
+      <div class="phon-ex">mbëkk = courber / mbaar = hangar</div>
+    </div>
+    <div class="phon-card">
+      <div class="phon-sound">nd</div>
+      <div class="phon-name">Prénasale dentale</div>
+      <div class="phon-tip">"n" + "d" fusionnés en un seul son</div>
+      <div class="phon-ex">ndeye = mère / ndox = eau</div>
+    </div>
+    <div class="phon-card">
+      <div class="phon-sound">nj</div>
+      <div class="phon-name">Prénasale palatale</div>
+      <div class="phon-tip">Comme "ndy" très rapide — son typiquement wolof</div>
+      <div class="phon-ex">njëkk = premier / njool = droit</div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <div style="font-size:11px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);margin-bottom:1rem;">Tons & longueur vocalique</div>
+  <div class="card">
+    <table class="table-small">
+      <tr><th>Règle</th><th>Exemple</th><th>Signification</th></tr>
+      <tr><td>Voyelle simple</td><td class="hl">a</td><td>courte : <em>xam</em> (savoir)</td></tr>
+      <tr><td>Voyelle longue (doublée)</td><td class="hl">aa</td><td>longue : <em>xaam</em> (cousin)</td></tr>
+      <tr><td>Accent tonique</td><td colspan="2">Généralement sur la <strong>première syllabe</strong> — ex : <span class="hl">NAN</span>-ga def ?</td></tr>
+    </table>
+    <div class="tip-box">💡 <strong>Astuce :</strong> En wolof, la longueur vocalique change le sens du mot. <em>Buur</em> = roi / <em>bur</em> = s'écouler. Prononcez chaque voyelle longue avec une durée clairement doublée.</div>
+  </div>
+
+  <hr class="divider">
+  <div style="font-size:11px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);margin-bottom:1rem;">Salutations rituelles — à mémoriser en priorité</div>
+  <div class="card">
+    <table class="table-small">
+      <tr><th>Moment</th><th>Formule wolof</th><th>Réponse attendue</th><th>Traduction</th></tr>
+      <tr><td>N'importe quand</td><td class="hl">Nanga def ?</td><td class="hl-g">Maa ngi fi rekk</td><td>Comment vas-tu ? / Je suis là simplement.</td></tr>
+      <tr><td>Rencontre</td><td class="hl">Salaam aleekum</td><td class="hl-g">Maalekum salaam</td><td>La paix soit sur toi (réponse obligatoire)</td></tr>
+      <tr><td>Après travail</td><td class="hl">Jërejëf</td><td class="hl-g">Waaw, jërejëf</td><td>Merci (réponse : "Oui, merci")</td></tr>
+      <tr><td>Matin</td><td class="hl">Fanaan ak jàmm ?</td><td class="hl-g">Jàmm rekk</td><td>As-tu passé la nuit en paix ? / En paix seulement.</td></tr>
+      <tr><td>Prendre congé</td><td class="hl">Mangi dem</td><td class="hl-g">Yendoo ak jàmm</td><td>Je m'en vais / Va en paix.</td></tr>
+    </table>
+    <div class="note-box">🌍 <strong>Culture :</strong> Ne pas saluer correctement est considéré comme très impoli. Prenez toujours le temps d'échanger plusieurs formules avant d'aborder le sujet médical. Cela crée la confiance (teranga).</div>
+  </div>
+</div>
+
+<!-- VOCABULAIRE -->
+<div class="page" id="page-vocabulaire">
+  <div class="page-title">Vocabulaire wolof</div>
+  <div class="page-subtitle">Cliquez sur un mot pour le marquer comme appris</div>
+  <div class="filter-bar">
+    <button class="filter-btn active" onclick="filterVocab('all', this)">Tout</button>
+    <button class="filter-btn" onclick="filterVocab('quotidien', this)">Quotidien</button>
+    <button class="filter-btn" onclick="filterVocab('voyage', this)">Voyage</button>
+    <button class="filter-btn" onclick="filterVocab('medical', this)">Médical</button>
+    <button class="filter-btn" onclick="filterVocab('unknown', this)">À apprendre</button>
+  </div>
+  <div id="vocab-list"></div>
+</div>
+
+<!-- FLASHCARDS -->
+<div class="page" id="page-flashcards">
+  <div class="page-title">Flashcards</div>
+  <div class="page-subtitle">Cliquez sur la carte pour révéler la traduction</div>
+  <div class="filter-bar" style="margin-bottom:1.5rem;">
+    <button class="filter-btn active" onclick="setFCFilter('all', this)">Tout</button>
+    <button class="filter-btn" onclick="setFCFilter('quotidien', this)">Quotidien</button>
+    <button class="filter-btn" onclick="setFCFilter('voyage', this)">Voyage</button>
+    <button class="filter-btn" onclick="setFCFilter('medical', this)">Médical</button>
+  </div>
+  <div class="flashcard-wrap">
+    <div class="fc-progress-wrap">
+      <span id="fc-counter">Carte 1/20</span>
+      <div class="fc-dots" id="fc-dots"></div>
+    </div>
+    <div class="flashcard-scene" id="flashcard" onclick="flipCard()">
+      <div class="flashcard-inner">
+        <div class="flashcard-face flashcard-front">
+          <div class="fc-cat" id="fc-cat">MÉDICAL</div>
+          <div class="fc-word" id="fc-word">Xale</div>
+          <div class="fc-pron" id="fc-pron">[xa-le]</div>
+          <div class="fc-hint" id="fc-hint">Nom</div>
+          <div class="fc-click">Cliquez pour révéler ↓</div>
+        </div>
+        <div class="flashcard-face flashcard-back">
+          <div class="fc-cat" id="fc-cat-b">MÉDICAL</div>
+          <div class="fc-translation" id="fc-translation">Enfant</div>
+          <div class="fc-example" id="fc-example">„Xale bi dafa feebar."</div>
+          <div class="fc-example-fr" id="fc-example-fr">L'enfant est malade.</div>
+        </div>
+      </div>
+    </div>
+    <div class="fc-controls">
+      <button class="btn btn-danger" onclick="rateCard(false)">❌ À revoir</button>
+      <button class="btn" onclick="prevCard()">← Préc.</button>
+      <button class="btn" onclick="nextCard()">Suiv. →</button>
+      <button class="btn btn-success" onclick="rateCard(true)">✓ Su</button>
+    </div>
+  </div>
+</div>
+
+<!-- GRAMMAIRE -->
+<div class="page" id="page-grammaire">
+  <div class="page-title">Grammaire wolof</div>
+  <div class="page-subtitle">Règles essentielles — le wolof est plus simple que le français sur plusieurs points</div>
+
+  <div class="grammar-rule" id="gr1">
+    <div class="grammar-rule-header" onclick="toggleGrammar('gr1')">
+      <div class="grammar-rule-title">✅ Pas de genre grammatical</div>
+      <span class="chevron">▾</span>
+    </div>
+    <div class="grammar-rule-body">
+      <p style="font-size:14px;margin:12px 0 8px;color:var(--text);">Le wolof n'a <strong>pas de masculin/féminin</strong>. Un seul article suffixe selon la classe nominale.</p>
+      <table class="table-small">
+        <tr><th>Fonction</th><th>Suffixe</th><th>Exemple</th><th>Traduction</th></tr>
+        <tr><td>Défini général</td><td class="hl">bi / gi / ji / li / mi / si / wi / yi</td><td>xale <span class="hl">bi</span></td><td>l'enfant (classe b)</td></tr>
+        <tr><td>Pluriel</td><td class="hl">yi</td><td>xale <span class="hl">yi</span></td><td>les enfants</td></tr>
+        <tr><td>Indéfini</td><td>— (pas d'article)</td><td>xale</td><td>un enfant / enfant</td></tr>
+      </table>
+      <div class="tip-box">💡 En pratique médicale, utilisez souvent l'indéfini (sans suffixe) : <em>„Xale dafa feebar"</em> = L'enfant est malade. Le suffixe -bi s'apprend progressivement avec le vocabulaire.</div>
+    </div>
+  </div>
+
+  <div class="grammar-rule" id="gr2">
+    <div class="grammar-rule-header" onclick="toggleGrammar('gr2')">
+      <div class="grammar-rule-title">⏰ Les marqueurs verbaux — temps et aspect</div>
+      <span class="chevron">▾</span>
+    </div>
+    <div class="grammar-rule-body">
+      <p style="font-size:14px;margin:12px 0 8px;color:var(--text);">En wolof, le verbe ne se conjugue pas. C'est un <strong>marqueur préverbal</strong> qui indique le temps/aspect/focus.</p>
+      <table class="table-small">
+        <tr><th>Marqueur</th><th>Sens</th><th>Exemple médical</th><th>Traduction</th></tr>
+        <tr><td class="hl">dafa</td><td>Il/elle (focus verbe)</td><td>Dafa <span class="hl">feebar</span></td><td>Il/elle est malade</td></tr>
+        <tr><td class="hl">maa ngi</td><td>Je suis en train de</td><td>Maa ngi <span class="hl">liggéey</span></td><td>Je travaille (en ce moment)</td></tr>
+        <tr><td class="hl">dinaa</td><td>Je vais (futur)</td><td>Dinaa <span class="hl">jël</span> temperature</td><td>Je vais prendre la température</td></tr>
+        <tr><td class="hl">dama</td><td>J'ai / je fais (focus verbe)</td><td>Dama <span class="hl">soxor</span></td><td>J'ai vomi</td></tr>
+        <tr><td class="hl">du</td><td>Négation</td><td>Du <span class="hl">feebar</span></td><td>Il/elle n'est pas malade</td></tr>
+      </table>
+      <div class="note-box">💡 Contexte clinique : <em>„Xale bi dafa feebar. Dafa soxor ak tanq. Dinaa ko jël ci doktoor bi."</em> = L'enfant est malade. Il a vomi et de la fièvre. Je vais l'emmener au médecin.</div>
+    </div>
+  </div>
+
+  <div class="grammar-rule" id="gr3">
+    <div class="grammar-rule-header" onclick="toggleGrammar('gr3')">
+      <div class="grammar-rule-title">📍 Structure de la phrase</div>
+      <span class="chevron">▾</span>
+    </div>
+    <div class="grammar-rule-body">
+      <p style="font-size:14px;margin:12px 0 8px;color:var(--text);">L'ordre de base est <strong>Sujet + Marqueur + Verbe + Objet</strong>. La mise en focus peut déplacer des éléments.</p>
+      <table class="table-small">
+        <tr><th>Structure</th><th>Exemple</th><th>Traduction</th></tr>
+        <tr><td>S + Marqueur + V</td><td>Xale <span class="hl">bi dafa</span> feebar</td><td>L'enfant est malade</td></tr>
+        <tr><td>S + Marqueur + V + O</td><td>Maa ngi <span class="hl">bind</span> dossier bi</td><td>Je remplis le dossier</td></tr>
+        <tr><td>Question (simple)</td><td>Dafa feebar <span class="hl">?</span></td><td>Est-il/elle malade ?</td></tr>
+        <tr><td>Question avec mot-Q</td><td><span class="hl">Fan</span> la daw ?</td><td>Où as-tu mal ? (lit: où la douleur ?)</td></tr>
+        <tr><td>Impératif</td><td>Verbe seul ou + ko/leen</td><td>Dem ! = Vas-y ! / Jël ko ! = Prends-le !</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="grammar-rule" id="gr4">
+    <div class="grammar-rule-header" onclick="toggleGrammar('gr4')">
+      <div class="grammar-rule-title">🔢 Nombres en wolof</div>
+      <span class="chevron">▾</span>
+    </div>
+    <div class="grammar-rule-body">
+      <table class="table-small">
+        <tr><th>Chiffre</th><th>Wolof</th><th>Chiffre</th><th>Wolof</th></tr>
+        <tr><td>1</td><td class="hl">benn</td><td>6</td><td class="hl">juróom benn</td></tr>
+        <tr><td>2</td><td class="hl">ñaar</td><td>7</td><td class="hl">juróom ñaar</td></tr>
+        <tr><td>3</td><td class="hl">ñett</td><td>10</td><td class="hl">fukk</td></tr>
+        <tr><td>4</td><td class="hl">ñeent</td><td>20</td><td class="hl">ñaar fukk</td></tr>
+        <tr><td>5</td><td class="hl">juróom</td><td>100</td><td class="hl">téeméer</td></tr>
+      </table>
+      <div class="tip-box">💡 Médical : <em>„Jël ko ñaar yoon ci benn bés."</em> = Donnez-lui deux fois par jour. / <em>„Dafa am ñett fan feebar."</em> = Il a de la fièvre depuis trois jours.</div>
+    </div>
+  </div>
+
+  <div class="grammar-rule" id="gr5">
+    <div class="grammar-rule-header" onclick="toggleGrammar('gr5')">
+      <div class="grammar-rule-title">🤝 Formules médicales essentielles</div>
+      <span class="chevron">▾</span>
+    </div>
+    <div class="grammar-rule-body">
+      <table class="table-small">
+        <tr><th>Contexte</th><th>Wolof</th><th>Français</th></tr>
+        <tr><td>Se présenter</td><td class="hl">Maa ngi tuddu [prénom]. Infirmière laa.</td><td>Je m'appelle [prénom]. Je suis infirmière.</td></tr>
+        <tr><td>Demander la douleur</td><td class="hl">Fan la daw ? Dafa daw bu bari ?</td><td>Où as-tu mal ? Ça fait très mal ?</td></tr>
+        <tr><td>Rassurer</td><td class="hl">Bul xam xam. Dina baax.</td><td>Ne t'inquiète pas. Ça va aller.</td></tr>
+        <tr><td>Fièvre</td><td class="hl">Tanq am na ko.</td><td>Il/elle a de la fièvre.</td></tr>
+        <tr><td>Médicament</td><td class="hl">Jël garab bi, juróom yoon ci benn bés.</td><td>Prends le médicament 5 fois par jour.</td></tr>
+        <tr><td>Allaitement</td><td class="hl">Noppil xale bi biscuit wi.</td><td>Allaite l'enfant au sein.</td></tr>
+        <tr><td>Urgence</td><td class="hl">Waxtaan naa doktoor bi léegi léegi !</td><td>Je vais appeler le médecin tout de suite !</td></tr>
+        <tr><td>Merci / Au revoir</td><td class="hl">Jërejëf. Yendoo ak jàmm.</td><td>Merci. Va en paix.</td></tr>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- ROLEPLAYS -->
+<div class="page" id="page-roleplays">
+  <div class="page-title">Jeux de rôle cliniques</div>
+  <div class="page-subtitle">Dialogues wolof — contexte pédiatrique et humanitaire au Sénégal</div>
+
+  <div class="roleplay-card">
+    <div class="roleplay-header">
+      <div class="roleplay-icon">🍼</div>
+      <div>
+        <div class="roleplay-title">Consultation nourrisson — centre de santé à Dakar</div>
+        <div style="font-size:12px;color:var(--muted);">Pesée, allaitement, carnet de santé</div>
+      </div>
+      <div style="font-size:11px;padding:3px 10px;border-radius:20px;background:var(--green-light);color:#6AC494;margin-left:auto;">Phase 2</div>
+    </div>
+    <div class="roleplay-body">
+      <div class="dialogue">
+        <div class="dialogue-line">
+          <span class="dialogue-speaker nurse">Infirmière</span>
+          <div class="dialogue-content">
+            <div class="wol">Salaam aleekum. Nanga def ? Maa ngi tuddu Marie. Infirmière laa fii.</div>
+            <div class="pron">[sa-LAAM a-lé-KUM. nan-GA def ? maa ngi tu-DU...]</div>
+            <div class="trans">La paix soit sur toi. Comment vas-tu ? Je m'appelle Marie. Je suis infirmière ici.</div>
+          </div>
+        </div>
+        <div class="dialogue-line">
+          <span class="dialogue-speaker parent">Yaye (mère)</span>
+          <div class="dialogue-content">
+            <div class="wol">Maalekum salaam. Maa ngi fi rekk. Jërejëf. Amoon na am problem ak xale bi.</div>
+            <div class="trans">Que la paix soit sur toi aussi. Je suis là simplement. Merci. J'avais un problème avec l'enfant.</div>
+          </div>
+        </div>
+        <div class="dialogue-line">
+          <span class="dialogue-speaker nurse">Infirmière</span>
+          <div class="dialogue-content">
+            <div class="wol">Ana tudd xale bi ? Am na am benn ñaari weer ?</div>
+            <div class="trans">Comment s'appelle l'enfant ? A-t-il un ou deux mois ?</div>
+          </div>
+        </div>
+        <div class="dialogue-line">
+          <span class="dialogue-speaker parent">Yaye</span>
+          <div class="dialogue-content">
+            <div class="wol">Abdou la tudd. Am na ñaar weer. Dafa dëkk bu baax, waaye dafay lekk bu baax.</div>
+            <div class="trans">Il s'appelle Abdou. Il a deux mois. Il pleure beaucoup mais mange bien.</div>
+          </div>
+        </div>
+        <div class="dialogue-line">
+          <span class="dialogue-speaker nurse">Infirmière</span>
+          <div class="dialogue-content">
+            <div class="wol">Dina ko lomb ci bàsket bi. Dey, dafa am kilo juróom ñaar. Baax na ! Noppil ko biscuit wi léegi ?</div>
+            <div class="trans">Je vais le peser sur la balance. Voilà, il pèse 5,2 kg. C'est bien ! Tu l'allaites au sein maintenant ?</div>
+          </div>
+        </div>
+        <div class="dialogue-line">
+          <span class="dialogue-speaker parent">Yaye</span>
+          <div class="dialogue-content">
+            <div class="wol">Waaw, noppil naa ko biscuit. Waaye ñaari yoon la noppil ci benn bés.</div>
+            <div class="trans">Oui, je l'allaite au sein. Mais je l'allaite seulement deux fois par jour.</div>
+          </div>
+        </div>
+        <div class="dialogue-line">
+          <span class="dialogue-speaker nurse">Infirmière</span>
+          <div class="dialogue-content">
+            <div class="wol">Bul def loolu ! Xale bu ñaar weer, dafay soxna biscuit juróom ak juróom ñaar yoon ci benn bés. Sunu docteur yi wax loolu.</div>
+            <div class="trans">Ne fais pas ça ! Un enfant de deux mois, il faut l'allaiter 8 à 10 fois par jour. C'est ce que nos médecins recommandent.</div>
+          </div>
+        </div>
+      </div>
+      <div class="vocab-key">📝 <strong>Vocabulaire clé :</strong> xale (enfant), yaye (mère), noppil biscuit (allaiter), lomb (peser), kilo (kilogramme), bén bés (par jour), feebar (être malade), dëkk (pleurer), lekk (manger)</div>
+    </div>
+  </div>
+
+  <div class="roleplay-card">
+    <div class="roleplay-header">
+      <div class="roleplay-icon">🌡️</div>
+      <div>
+        <div class="roleplay-title">Fièvre & paludisme présumé chez l'enfant</div>
+        <div style="font-size:12px;color:var(--muted);">Anamnèse, traitement, éducation thérapeutique</div>
+      </div>
+      <div style="font-size:11px;padding:3px 10px;border-radius:20px;background:var(--red-light);color:#E08080;margin-left:auto;">Phase 2–3</div>
+    </div>
+    <div class="roleplay-body">
+      <div class="dialogue">
+        <div class="dialogue-line">
+          <span class="dialogue-speaker nurse">Infirmière</span>
+          <div class="dialogue-content">
+            <div class="wol">Nanga def ? Ana xale bi ? Feebar na ?</div>
+            <div class="trans">Comment vas-tu ? Où est l'enfant ? Est-il malade ?</div>
+          </div>
+        </div>
+        <div class="dialogue-line">
+          <span class="dialogue-speaker parent">Yaye</span>
+          <div class="dialogue-content">
+            <div class="wol">Waaw, dafa feebar bu baari. Tanq am na ko. Dafay dëkk, dafa soxor ñaareel yoon bi suba.</div>
+            <div class="trans">Oui, il est très malade. Il a de la fièvre. Il pleure et a vomi trois fois ce matin.</div>
+          </div>
+        </div>
+        <div class="dialogue-line">
+          <span class="dialogue-speaker nurse">Infirmière</span>
+          <div class="dialogue-content">
+            <div class="wol">Ñaari fan la am tanq ? Moom jàpp na ko sibiru ?</div>
+            <div class="trans">Depuis combien de jours a-t-il de la fièvre ? A-t-il été piqué par un moustique ?</div>
+          </div>
+        </div>
+        <div class="dialogue-line">
+          <span class="dialogue-speaker parent">Yaye</span>
+          <div class="dialogue-content">
+            <div class="wol">Ñett fan. Waaye nangu moo tax mu feebar ? Nangu am naa ko ak gris-gris.</div>
+            <div class="trans">Trois jours. Mais c'est peut-être un mauvais œil qui l'a rendu malade ? Je lui ai mis un gris-gris.</div>
+          </div>
+        </div>
+        <div class="dialogue-line">
+          <span class="dialogue-speaker nurse">Infirmière</span>
+          <div class="dialogue-content">
+            <div class="wol">Waaw, man ma xam na gris-gris bi. Waaye, xale bi dafa am sibiru — c'est le paludisme. Garab bu baax am na. Dinaa ko jox quinquina bu am na ci.</div>
+            <div class="trans">Je comprends le gris-gris. Mais l'enfant a le paludisme — les moustiques l'ont piqué. Il y a un bon médicament. Je vais lui donner de la quinine adaptée.</div>
+          </div>
+        </div>
+      </div>
+      <div class="vocab-key">📝 <strong>Vocabulaire clé :</strong> tanq (fièvre), sibiru (moustique/paludisme), soxor (vomir), dëkk (pleurer), garab (médicament), gris-gris (amulette), feebar (être malade), ñett fan (trois jours), jox (donner)</div>
+    </div>
+  </div>
+
+  <div class="roleplay-card">
+    <div class="roleplay-header">
+      <div class="roleplay-icon">💉</div>
+      <div>
+        <div class="roleplay-title">Vaccination — Programme Élargi de Vaccination</div>
+        <div style="font-size:12px;color:var(--muted);">Expliquer la vaccination, rassurer la mère</div>
+      </div>
+      <div style="font-size:11px;padding:3px 10px;border-radius:20px;background:var(--blue-light);color:#6AAFE0;margin-left:auto;">Phase 3</div>
+    </div>
+    <div class="roleplay-body">
+      <div class="dialogue">
+        <div class="dialogue-line">
+          <span class="dialogue-speaker nurse">Infirmière</span>
+          <div class="dialogue-content">
+            <div class="wol">Tey, dinaa def vaccination bi ci xale bi. Dina ko piquer ci génn bi. Bul xam xam — dina dëkk bu ndaw, waaye dina baax.</div>
+            <div class="trans">Aujourd'hui, je vais vacciner l'enfant. Je vais lui faire une piqûre dans le bras. Ne t'inquiète pas — il va pleurer un peu, mais ça va aller.</div>
+          </div>
+        </div>
+        <div class="dialogue-line">
+          <span class="dialogue-speaker parent">Yaye</span>
+          <div class="dialogue-content">
+            <div class="wol">Ana nit ku am nguir piquer xale bi ? Maa anxieux.</div>
+            <div class="trans">Pourquoi piquer l'enfant ? Je suis anxieuse.</div>
+          </div>
+        </div>
+        <div class="dialogue-line">
+          <span class="dialogue-speaker nurse">Infirmière</span>
+          <div class="dialogue-content">
+            <div class="wol">Vaccination bi ngir xarala xale bi ci yaram yu wérël — polio, rougeole, tétanos. Xale yu vacciner yi, feebar na leen ci yaram yu xéex yu bari.</div>
+            <div class="trans">La vaccination protège l'enfant contre des maladies graves — polio, rougeole, tétanos. Les enfants vaccinés tombent malades beaucoup moins souvent.</div>
+          </div>
+        </div>
+        <div class="dialogue-line">
+          <span class="dialogue-speaker nurse">Infirmière</span>
+          <div class="dialogue-content">
+            <div class="wol">Bi jox vaccination bi, dangay dem ci kër gu kanam ak carnet bi. Bés bu ayi ñaari fan, am na ko tanq — normal la. Jox ko paracétamol.</div>
+            <div class="trans">Après la vaccination, tu rentreras à la maison avec le carnet. Dans un ou deux jours, il peut avoir de la fièvre — c'est normal. Donne-lui du paracétamol.</div>
+          </div>
+        </div>
+      </div>
+      <div class="vocab-key">📝 <strong>Vocabulaire clé :</strong> vaccination (vaccination), piquer (faire une piqûre), génn (bras), xarala (protéger), yaram (corps), feebar (maladie/être malade), carnet (carnet de santé), tanq (fièvre), normal la (c'est normal)</div>
+    </div>
+  </div>
+
+  <div class="roleplay-card">
+    <div class="roleplay-header">
+      <div class="roleplay-icon">🆘</div>
+      <div>
+        <div class="roleplay-title">Déshydratation & SRO — enfant malnutri</div>
+        <div style="font-size:12px;color:var(--muted);">Urgence nutrition, explication des Sels de Réhydratation Orale</div>
+      </div>
+      <div style="font-size:11px;padding:3px 10px;border-radius:20px;background:rgba(192,64,64,0.15);color:#E08080;margin-left:auto;">Phase 3</div>
+    </div>
+    <div class="roleplay-body">
+      <div class="dialogue">
+        <div class="dialogue-line">
+          <span class="dialogue-speaker nurse">Infirmière</span>
+          <div class="dialogue-content">
+            <div class="wol">Xale bi dafay lekk ndox ? Diwan lekk ba ñaari fan walla ñett fan la ?</div>
+            <div class="trans">L'enfant boit-il de l'eau ? Est-ce qu'il refuse de manger depuis deux ou trois jours ?</div>
+          </div>
+        </div>
+        <div class="dialogue-line">
+          <span class="dialogue-speaker parent">Yaye</span>
+          <div class="dialogue-content">
+            <div class="wol">Waaw, diwan lekk. Dafay soxor lépp bi lekk ko. Dafay yàq ci biir bu bari.</div>
+            <div class="trans">Oui, il refuse de manger. Il vomit tout ce qu'il mange. Il a beaucoup de diarrhée.</div>
+          </div>
+        </div>
+        <div class="dialogue-line">
+          <span class="dialogue-speaker nurse">Infirmière</span>
+          <div class="dialogue-content">
+            <div class="wol">Xale bi dafa am àll — dafa sori ndox. Léegi dinaa ko jox SRO — garab ci ndox. Dinaa defar ko. Jox ko benn gàllaas ci diir juróom minit.</div>
+            <div class="trans">L'enfant est déshydraté — son corps manque d'eau. Je vais lui donner des SRO — un médicament dans l'eau. Je vais le préparer. Donne-lui un verre toutes les cinq minutes.</div>
+          </div>
+        </div>
+        <div class="dialogue-line">
+          <span class="dialogue-speaker nurse">Infirmière</span>
+          <div class="dialogue-content">
+            <div class="wol">Bi dem ci kër, def SRO bu bees ci ndox bu sedd. Jox ko ñett gàllaas ci benn diir. Diwan jox mu yàq — SRO bi am na nguir yàq bi.</div>
+            <div class="trans">À la maison, prépare une nouvelle SRO dans de l'eau froide. Donne-lui trois verres par heure. Ne t'arrête pas si il vomit — la SRO est faite pour les vomissements.</div>
+          </div>
+        </div>
+      </div>
+      <div class="vocab-key">📝 <strong>Vocabulaire clé :</strong> àll (déshydratation), ndox (eau), soxor (vomir), yàq ci biir (diarrhée), SRO/garab (médicament SRO), gàllaas (verre), defar (préparer), sedd (froid), diwr/diir (heure)</div>
+    </div>
+  </div>
+</div>
+
+<!-- QUIZ -->
+<div class="page" id="page-quiz">
+  <div class="page-title">Quiz</div>
+  <div class="page-subtitle">Testez votre wolof — vocabulaire médical et quotidien</div>
+  <div class="filter-bar">
+    <button class="filter-btn active" onclick="setQuizFilter('all', this)">Tout</button>
+    <button class="filter-btn" onclick="setQuizFilter('quotidien', this)">Quotidien</button>
+    <button class="filter-btn" onclick="setQuizFilter('voyage', this)">Voyage</button>
+    <button class="filter-btn" onclick="setQuizFilter('medical', this)">Médical</button>
+  </div>
+  <div class="quiz-wrap">
+    <div class="quiz-score-line">Score : <strong id="quiz-score">0</strong> / <span id="quiz-total">0</span> — Question <strong id="quiz-num">1</strong></div>
+    <div class="quiz-question" id="quiz-question"></div>
+    <div class="quiz-options" id="quiz-options"></div>
+    <div class="quiz-feedback" id="quiz-feedback"></div>
+    <div style="display:flex;gap:10px;">
+      <button class="btn btn-primary" id="quiz-next-btn" onclick="nextQuestion()" style="display:none;">Question suivante →</button>
+      <button class="btn" onclick="restartQuiz()">↺ Recommencer</button>
+    </div>
+  </div>
+</div>
+
+<!-- PLANNING -->
+<div class="page" id="page-planning">
+  <div class="page-title">Planning hebdomadaire</div>
+  <div class="page-subtitle">Programme adapté au wolof — accent sur l'oral et la culture</div>
+
+  <div class="streak-banner">
+    <div>
+      <div class="streak-num" id="streak-num">0</div>
+      <div class="streak-label">jours complétés</div>
+    </div>
+    <div>
+      <div class="streak-title">🔥 Continuez votre progression !</div>
+      <div class="streak-label" style="margin-top:4px;">La régularité est la clé — 30 min par jour suffisent.</div>
+    </div>
+  </div>
+
+  <div class="week-grid" id="week-grid"></div>
+
+  <div class="card">
+    <div style="font-weight:600;font-size:15px;margin-bottom:1rem;color:var(--text);">📋 Programme type hebdomadaire</div>
+    <table class="table-small">
+      <tr><th>Jour</th><th>Activité principale</th><th>Durée</th><th>Exemples concrets</th></tr>
+      <tr><td>Lundi</td><td>🔊 Phonétique & salutations</td><td>30 min</td><td>Pratiquer les sons ñ, x, mb, nd à voix haute. Mémoriser les salutations complètes.</td></tr>
+      <tr><td>Mardi</td><td>👂 Écoute audio wolof</td><td>30 min</td><td>Podcasts RFM Sénégal, YouTube Wolof pour débutants, musique sénégalaise</td></tr>
+      <tr><td>Mercredi</td><td>📚 Vocabulaire médical</td><td>30 min</td><td>Flashcards : maladies pédiatriques, signes vitaux, médicaments courants</td></tr>
+      <tr><td>Jeudi</td><td>💬 Conversation tandem</td><td>30–45 min</td><td>HelloTalk avec locuteur sénégalais, idéalement agent de santé communautaire</td></tr>
+      <tr><td>Vendredi</td><td>👶 Jeu de rôle clinique</td><td>30 min</td><td>Simuler consultation pédiatrique, expliquer vaccination en wolof</td></tr>
+      <tr><td>Samedi</td><td>🌍 Culture & contexte</td><td>30 min</td><td>Documentaire sur le Sénégal, système de santé sénégalais, teranga</td></tr>
+      <tr><td>Dimanche</td><td>🎵 Révision immersive</td><td>1h</td><td>Film sénégalais (Moolaadé, Atlantique), musique Youssou N'Dour, révision libre</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- RESSOURCES -->
+<div class="page" id="page-ressources">
+  <div class="page-title">Ressources recommandées</div>
+  <div class="page-subtitle">Sélection pour le wolof — langue peu dotée, ressources à connaître</div>
+
+  <div style="margin-bottom:1.25rem;">
+    <div class="vocab-category">📖 Apprentissage du wolof</div>
+    <div class="resource-grid">
+      <div class="resource-card">
+        <div class="resource-icon">📗</div>
+        <div>
+          <div class="resource-name">Peace Corps Wolof Manual</div>
+          <div class="resource-desc">Manuel complet gratuit en PDF — le meilleur outil d'apprentissage disponible. Téléchargeable sur le site du Peace Corps.</div>
+          <div class="resource-badge" style="background:var(--green-light);color:#6AC494;">PDF gratuit · Essentiel</div>
+        </div>
+      </div>
+      <div class="resource-card">
+        <div class="resource-icon">🎧</div>
+        <div>
+          <div class="resource-name">Wolof avec Oumar (YouTube)</div>
+          <div class="resource-desc">Chaînes YouTube de locuteurs natifs enseignant le wolof aux débutants. Prononciation authentique.</div>
+          <div class="resource-badge" style="background:var(--green-light);color:#6AC494;">Vidéo · Gratuit</div>
+        </div>
+      </div>
+      <div class="resource-card">
+        <div class="resource-icon">📱</div>
+        <div>
+          <div class="resource-name">Clozemaster (Wolof)</div>
+          <div class="resource-desc">Application de phrases en contexte. Moins fourni que pour l'allemand, mais utile pour consolider.</div>
+          <div class="resource-badge" style="background:rgba(224,123,32,0.2);color:var(--accent);">App · Freemium</div>
+        </div>
+      </div>
+      <div class="resource-card">
+        <div class="resource-icon">💬</div>
+        <div>
+          <div class="resource-name">HelloTalk — Sénégalais</div>
+          <div class="resource-desc">Cherchez des partenaires sénégalais sur HelloTalk. Précisez votre métier — les agents de santé communautaires sont très réceptifs.</div>
+          <div class="resource-badge" style="background:var(--green-light);color:#6AC494;">Tandem · Gratuit</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div style="margin-bottom:1.25rem;">
+    <div class="vocab-category">🏥 Wolof médical & pédiatrique</div>
+    <div class="resource-grid">
+      <div class="resource-card">
+        <div class="resource-icon">🌍</div>
+        <div>
+          <div class="resource-name">OMS / UNICEF Sénégal</div>
+          <div class="resource-desc">Guides de nutrition, vaccination PEV et SMI disponibles en wolof sur les sites UNICEF Sénégal. Vocabulaire officiel.</div>
+          <div class="resource-badge" style="background:var(--green-light);color:#6AC494;">Médical · Gratuit</div>
+        </div>
+      </div>
+      <div class="resource-card">
+        <div class="resource-icon">📋</div>
+        <div>
+          <div class="resource-name">Glossaire santé wolof-français</div>
+          <div class="resource-desc">Cherchez "lexique médical wolof" — plusieurs ONG ont publié des glossaires bilingues pour agents de santé communautaires.</div>
+          <div class="resource-badge" style="background:rgba(42,111,168,0.15);color:#6AAFE0;">Spécialisé · Gratuit</div>
+        </div>
+      </div>
+      <div class="resource-card">
+        <div class="resource-icon">📻</div>
+        <div>
+          <div class="resource-name">Radio RFM / RTS Sénégal</div>
+          <div class="resource-desc">Radio sénégalaise en wolof accessible en streaming. Émissions santé régulières, langue authentique, rythme naturel.</div>
+          <div class="resource-badge" style="background:var(--green-light);color:#6AC494;">Écoute · Gratuit</div>
+        </div>
+      </div>
+      <div class="resource-card">
+        <div class="resource-icon">🎬</div>
+        <div>
+          <div class="resource-name">Cinéma sénégalais</div>
+          <div class="resource-desc">Films : Moolaadé (Ousmane Sembène), Atlantique (Mati Diop). Immersion culturelle et linguistique authentique.</div>
+          <div class="resource-badge" style="background:rgba(42,111,168,0.15);color:#6AAFE0;">Culture · Streaming</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div style="margin-bottom:1.25rem;">
+    <div class="vocab-category">✈️ Missions humanitaires & terrain</div>
+    <div class="resource-grid">
+      <div class="resource-card">
+        <div class="resource-icon">🏥</div>
+        <div>
+          <div class="resource-name">MSF / Médecins du Monde</div>
+          <div class="resource-desc">Formations linguistiques avant départ proposées. Modules wolof pour soignants disponibles sur demande.</div>
+          <div class="resource-badge" style="background:rgba(224,123,32,0.2);color:var(--accent);">ONG · Sur demande</div>
+        </div>
+      </div>
+      <div class="resource-card">
+        <div class="resource-icon">👥</div>
+        <div>
+          <div class="resource-name">Groupes Facebook diaspora</div>
+          <div class="resource-desc">"Infirmières en Afrique de l'Ouest", "Coopération médicale Sénégal" — communautés de professionnels avec retours d'expérience.</div>
+          <div class="resource-badge" style="background:var(--green-light);color:#6AC494;">Communauté · Gratuit</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="note-box">
+    🌍 <strong>Conseil culturel :</strong> Le wolof est une langue de tradition orale très vivante. La meilleure ressource reste un·e locuteur·trice natif·ve patient·e. Si vous préparez une mission, contactez à l'avance l'infirmier·ère chef du poste de santé de destination — souvent ravi de pratiquer avec vous avant votre arrivée.
+  </div>
+</div>
+
+</main>
+</div>
+
+<script>
+// =====================
+// VOCABULARY DATA
+// =====================
+const vocabData = [
+  // QUOTIDIEN
+  { wol: 'Nanga def ?', pron: '[nan-GA def]', fr: 'Comment vas-tu ?', ex: 'Nanga def, yaye ?', exfr: 'Comment vas-tu, maman ?', cat: 'quotidien' },
+  { wol: 'Maa ngi fi rekk', pron: '[maa ngi fi rekk]', fr: 'Je suis là (bien)', ex: 'Maa ngi fi rekk, jërejëf.', exfr: 'Je suis là simplement, merci.', cat: 'quotidien' },
+  { wol: 'Jërejëf', pron: '[djé-ré-djef]', fr: 'Merci', ex: 'Jërejëf bu baari.', exfr: 'Merci beaucoup.', cat: 'quotidien' },
+  { wol: 'Waaw', pron: '[waaw]', fr: 'Oui', ex: 'Waaw, dafa baax.', exfr: 'Oui, c\'est bien.', cat: 'quotidien' },
+  { wol: 'Déedéet', pron: '[DÉ-dét]', fr: 'Non', ex: 'Déedéet, du feebar.', exfr: 'Non, il n\'est pas malade.', cat: 'quotidien' },
+  { wol: 'Maa ngi tuddu...', pron: '[maa ngi tu-DU]', fr: 'Je m\'appelle...', ex: 'Maa ngi tuddu Marie. Infirmière laa.', exfr: 'Je m\'appelle Marie. Je suis infirmière.', cat: 'quotidien' },
+  { wol: 'Xale', pron: '[xa-le]', fr: 'Enfant', ex: 'Xale bi dafa feebar.', exfr: 'L\'enfant est malade.', cat: 'quotidien' },
+  { wol: 'Yaye', pron: '[ya-ye]', fr: 'Mère', ex: 'Ana yaye bi ?', exfr: 'Où est la mère ?', cat: 'quotidien' },
+  { wol: 'Baay', pron: '[baay]', fr: 'Père', ex: 'Baay bi dem na.', exfr: 'Le père est parti.', cat: 'quotidien' },
+  { wol: 'Kër', pron: '[ker]', fr: 'Maison / famille', ex: 'Dem leen ci kër.', exfr: 'Rentrez à la maison.', cat: 'quotidien' },
+
+  // VOYAGE
+  { wol: 'Mangi dem', pron: '[man-gi dem]', fr: 'Je m\'en vais', ex: 'Mangi dem ci dëkk bi.', exfr: 'Je m\'en vais en ville.', cat: 'voyage' },
+  { wol: 'Yendoo ak jàmm', pron: '[yen-do ak djamm]', fr: 'Va en paix', ex: 'Yendoo ak jàmm, jërejëf.', exfr: 'Va en paix, merci.', cat: 'voyage' },
+  { wol: 'Poste de santé', pron: '[poste de santé]', fr: 'Centre de santé', ex: 'Ana poste de santé bi ?', exfr: 'Où est le centre de santé ?', cat: 'voyage' },
+  { wol: 'Dëkk', pron: '[dekk]', fr: 'Ville / village', ex: 'Dëkk bi neekul jëm.', exfr: 'La ville n\'est pas loin.', cat: 'voyage' },
+  { wol: 'Taxi bi', pron: '[tak-si bi]', fr: 'Le taxi', ex: 'Jël taxi bi ngir dem.', exfr: 'Prends le taxi pour y aller.', cat: 'voyage' },
+  { wol: 'Waxtaan', pron: '[wak-taan]', fr: 'Appeler / contacter', ex: 'Waxtaan naa doktoor bi.', exfr: 'Je vais appeler le médecin.', cat: 'voyage' },
+  { wol: 'Léegi léegi', pron: '[lé-gi lé-gi]', fr: 'Tout de suite', ex: 'Dem léegi léegi !', exfr: 'Pars tout de suite !', cat: 'voyage' },
+  { wol: 'Jàmm', pron: '[djamm]', fr: 'Paix / sécurité', ex: 'Am jàmm rekk ?', exfr: 'Tout va bien seulement ?', cat: 'voyage' },
+
+  // MÉDICAL
+  { wol: 'Feebar', pron: '[fé-bar]', fr: 'Être malade / maladie', ex: 'Xale bi dafa feebar.', exfr: 'L\'enfant est malade.', cat: 'medical' },
+  { wol: 'Tanq', pron: '[tang]', fr: 'Fièvre / chaud', ex: 'Tanq am na ko.', exfr: 'Il/elle a de la fièvre.', cat: 'medical' },
+  { wol: 'Daw', pron: '[daw]', fr: 'Douleur / faire mal', ex: 'Fan la daw ?', exfr: 'Où as-tu mal ?', cat: 'medical' },
+  { wol: 'Soxor', pron: '[so-kor]', fr: 'Vomir', ex: 'Dafa soxor ñaareel.', exfr: 'Il/elle a vomi trois fois.', cat: 'medical' },
+  { wol: 'Yàq ci biir', pron: '[yak ci biir]', fr: 'Diarrhée', ex: 'Dafay yàq ci biir.', exfr: 'Il/elle a la diarrhée.', cat: 'medical' },
+  { wol: 'Garab', pron: '[ga-rab]', fr: 'Médicament / remède', ex: 'Jël garab bi légi.', exfr: 'Prends le médicament maintenant.', cat: 'medical' },
+  { wol: 'Noppil biscuit', pron: '[nop-pil bis-KUI]', fr: 'Allaiter au sein', ex: 'Noppil xale bi biscuit.', exfr: 'Allaite l\'enfant au sein.', cat: 'medical' },
+  { wol: 'Sibiru', pron: '[si-bi-ru]', fr: 'Moustique / paludisme', ex: 'Sibiru moo ko japp.', exfr: 'Le moustique l\'a attrapé (paludisme).', cat: 'medical' },
+  { wol: 'Piquer', pron: '[pi-KÉ]', fr: 'Faire une piqûre / vacciner', ex: 'Dinaa ko piquer vaccination.', exfr: 'Je vais le vacciner.', cat: 'medical' },
+  { wol: 'Àll', pron: '[all]', fr: 'Déshydratation / sécheresse', ex: 'Xale bi dafa am àll.', exfr: 'L\'enfant est déshydraté.', cat: 'medical' },
+  { wol: 'Ndox', pron: '[ndokh]', fr: 'Eau', ex: 'Jox ko ndox bu bari.', exfr: 'Donne-lui beaucoup d\'eau.', cat: 'medical' },
+  { wol: 'Lomb', pron: '[lomb]', fr: 'Peser', ex: 'Dinaa ko lomb ci bàsket bi.', exfr: 'Je vais le peser sur la balance.', cat: 'medical' },
+  { wol: 'Xarala', pron: '[kha-ra-la]', fr: 'Protéger', ex: 'Vaccination bi xarala xale bi.', exfr: 'La vaccination protège l\'enfant.', cat: 'medical' },
+  { wol: 'Bul xam xam', pron: '[bul kham kham]', fr: 'Ne t\'inquiète pas', ex: 'Bul xam xam, dina baax.', exfr: 'Ne t\'inquiète pas, ça va aller.', cat: 'medical' },
+  { wol: 'Dina baax', pron: '[di-na baakhe]', fr: 'Ça va aller', ex: 'Dina baax, bul xam xam.', exfr: 'Ça va aller, ne t\'inquiète pas.', cat: 'medical' },
+  { wol: 'Yaram', pron: '[ya-ram]', fr: 'Corps', ex: 'Yaram bi dafa tank.', exfr: 'Le corps est chaud.', cat: 'medical' },
+  { wol: 'Génn', pron: '[guenn]', fr: 'Bras / dehors', ex: 'Piquer ci génn bi.', exfr: 'Piquer dans le bras.', cat: 'medical' },
+  { wol: 'Ñaari fan', pron: '[nya-ri fan]', fr: 'Deux jours', ex: 'Feebar na ñaari fan.', exfr: 'Malade depuis deux jours.', cat: 'medical' },
+  { wol: 'Bén bés', pron: '[ben bés]', fr: 'Par jour', ex: 'Jox ko ñaar yoon ci bén bés.', exfr: 'Donnez-lui deux fois par jour.', cat: 'medical' },
+  { wol: 'Doktoor', pron: '[dok-tor]', fr: 'Médecin', ex: 'Waxtaan naa doktoor bi.', exfr: 'Je vais appeler le médecin.', cat: 'medical' },
+  { wol: 'Infirmière', pron: '[in-fir-MYER]', fr: 'Infirmière (emprunté)', ex: 'Infirmière laa. Maa ngi feexël leen.', exfr: 'Je suis infirmière. Je suis là pour vous aider.', cat: 'medical' },
+];
+
+let knownWords = JSON.parse(localStorage.getItem('wol_knownWords') || '[]');
+
+function saveKnown() {
+  localStorage.setItem('wol_knownWords', JSON.stringify(knownWords));
+  updateProgress();
+}
+
+function updateProgress() {
+  const count = knownWords.length;
+  document.getElementById('known-count').textContent = count;
+  const pct = Math.min(100, Math.round((count / 200) * 100));
+  document.getElementById('global-progress').style.width = pct + '%';
+}
+
+// =====================
+// NAVIGATION
+// =====================
+document.querySelectorAll('.nav-item').forEach(item => {
+  item.addEventListener('click', () => {
+    document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    item.classList.add('active');
+    const page = item.dataset.page;
+    document.getElementById('page-' + page).classList.add('active');
+    if (page === 'vocabulaire') renderVocab('all');
+    if (page === 'flashcards') initFlashcards();
+    if (page === 'quiz') initQuiz();
+    if (page === 'planning') renderPlanning();
+  });
+});
+
+// =====================
+// VOCABULARY
+// =====================
+function renderVocab(filter) {
+  const container = document.getElementById('vocab-list');
+  container.innerHTML = '';
+  const groups = { quotidien: [], voyage: [], medical: [] };
+  const labels = { quotidien: '🏠 Quotidien', voyage: '✈️ Voyage / Humanitaire', medical: '🏥 Médical pédiatrique' };
+  let items = vocabData;
+  if (filter === 'unknown') items = vocabData.filter(w => !knownWords.includes(w.wol));
+  else if (filter !== 'all') items = vocabData.filter(w => w.cat === filter);
+  items.forEach(w => { if (groups[w.cat]) groups[w.cat].push(w); });
+  Object.keys(groups).forEach(cat => {
+    if (!groups[cat].length) return;
+    const catDiv = document.createElement('div');
+    catDiv.className = 'vocab-category';
+    catDiv.textContent = labels[cat];
+    container.appendChild(catDiv);
+    const grid = document.createElement('div');
+    grid.className = 'vocab-grid';
+    groups[cat].forEach(w => {
+      const card = document.createElement('div');
+      card.className = 'vocab-card' + (knownWords.includes(w.wol) ? ' known' : '');
+      card.innerHTML = `
+        <div style="flex:1;">
+          <div class="vocab-wol">${w.wol}</div>
+          <div class="vocab-pron">${w.pron}</div>
+          <div class="vocab-fr">${w.fr}</div>
+          <div class="vocab-ex">${w.ex} — <em style="color:var(--muted);font-size:11px;">${w.exfr}</em></div>
+        </div>
+        <div class="vocab-check">${knownWords.includes(w.wol) ? '✓' : ''}</div>
+      `;
+      card.onclick = () => toggleKnown(w.wol, card);
+      grid.appendChild(card);
+    });
+    container.appendChild(grid);
+  });
+}
+
+function toggleKnown(word, el) {
+  const idx = knownWords.indexOf(word);
+  if (idx === -1) { knownWords.push(word); el.classList.add('known'); el.querySelector('.vocab-check').textContent = '✓'; }
+  else { knownWords.splice(idx, 1); el.classList.remove('known'); el.querySelector('.vocab-check').textContent = ''; }
+  saveKnown();
+}
+
+function filterVocab(filter, btn) {
+  document.querySelectorAll('#page-vocabulaire .filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderVocab(filter);
+}
+
+// =====================
+// FLASHCARDS
+// =====================
+let fcIndex = 0, fcFilter = 'all', fcItems = [];
+
+function setFCFilter(f, btn) {
+  document.querySelectorAll('#page-flashcards .filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  fcFilter = f;
+  initFlashcards();
+}
+
+function initFlashcards() {
+  fcItems = (fcFilter === 'all' ? [...vocabData] : vocabData.filter(w => w.cat === fcFilter)).sort(() => Math.random() - 0.5);
+  fcIndex = 0;
+  document.getElementById('flashcard').classList.remove('flipped');
+  renderFC();
+}
+
+function renderFC() {
+  if (!fcItems.length) return;
+  const w = fcItems[fcIndex];
+  document.getElementById('fc-cat').textContent = w.cat.toUpperCase();
+  document.getElementById('fc-cat-b').textContent = w.cat.toUpperCase();
+  document.getElementById('fc-word').textContent = w.wol;
+  document.getElementById('fc-pron').textContent = w.pron;
+  document.getElementById('fc-hint').textContent = 'Wolof';
+  document.getElementById('fc-translation').textContent = w.fr;
+  document.getElementById('fc-example').textContent = w.ex;
+  document.getElementById('fc-example-fr').textContent = w.exfr;
+  document.getElementById('fc-counter').textContent = `Carte ${fcIndex + 1}/${fcItems.length}`;
+  document.getElementById('flashcard').classList.remove('flipped');
+  const dots = document.getElementById('fc-dots');
+  dots.innerHTML = '';
+  const show = Math.min(10, fcItems.length);
+  for (let i = 0; i < show; i++) {
+    const d = document.createElement('div');
+    d.className = 'fc-dot' + (i < fcIndex ? ' done' : i === fcIndex ? ' current' : '');
+    dots.appendChild(d);
+  }
+}
+
+function flipCard() { document.getElementById('flashcard').classList.toggle('flipped'); }
+function nextCard() { if (fcIndex < fcItems.length - 1) { fcIndex++; renderFC(); } }
+function prevCard() { if (fcIndex > 0) { fcIndex--; renderFC(); } }
+function rateCard(known) {
+  if (known && !knownWords.includes(fcItems[fcIndex].wol)) { knownWords.push(fcItems[fcIndex].wol); saveKnown(); }
+  nextCard();
+}
+
+// =====================
+// GRAMMAR
+// =====================
+function toggleGrammar(id) { document.getElementById(id).classList.toggle('open'); }
+
+// =====================
+// QUIZ
+// =====================
+let quizItems = [], quizIndex = 0, quizScore = 0, quizFilter = 'all', quizAnswered = false;
+
+function setQuizFilter(f, btn) {
+  document.querySelectorAll('#page-quiz .filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  quizFilter = f;
+  initQuiz();
+}
+
+function initQuiz() {
+  const pool = quizFilter === 'all' ? vocabData : vocabData.filter(w => w.cat === quizFilter);
+  quizItems = [...pool].sort(() => Math.random() - 0.5).slice(0, 15);
+  quizIndex = 0; quizScore = 0;
+  renderQuestion();
+}
+
+function renderQuestion() {
+  quizAnswered = false;
+  const w = quizItems[quizIndex];
+  document.getElementById('quiz-question').textContent = `Que signifie en français : « ${w.wol} » ?`;
+  document.getElementById('quiz-num').textContent = quizIndex + 1;
+  document.getElementById('quiz-total').textContent = quizItems.length;
+  document.getElementById('quiz-score').textContent = quizScore;
+  document.getElementById('quiz-feedback').className = 'quiz-feedback';
+  document.getElementById('quiz-next-btn').style.display = 'none';
+  const wrongs = vocabData.filter(x => x.fr !== w.fr).sort(() => Math.random() - 0.5).slice(0, 3).map(x => x.fr);
+  const options = [...wrongs, w.fr].sort(() => Math.random() - 0.5);
+  const container = document.getElementById('quiz-options');
+  container.innerHTML = '';
+  options.forEach(opt => {
+    const btn = document.createElement('button');
+    btn.className = 'quiz-option';
+    btn.textContent = opt;
+    btn.onclick = () => answerQuiz(opt, w.fr, btn, w);
+    container.appendChild(btn);
+  });
+}
+
+function answerQuiz(chosen, correct, btn, w) {
+  if (quizAnswered) return;
+  quizAnswered = true;
+  document.querySelectorAll('.quiz-option').forEach(b => b.classList.add('disabled'));
+  const fb = document.getElementById('quiz-feedback');
+  if (chosen === correct) {
+    btn.classList.add('correct');
+    quizScore++;
+    document.getElementById('quiz-score').textContent = quizScore;
+    fb.className = 'quiz-feedback correct-fb';
+    fb.textContent = `✓ Exact ! Exemple : ${w.ex} — ${w.exfr}`;
+  } else {
+    btn.classList.add('wrong');
+    document.querySelectorAll('.quiz-option').forEach(b => { if (b.textContent === correct) b.classList.add('correct'); });
+    fb.className = 'quiz-feedback wrong-fb';
+    fb.textContent = `✗ Incorrect. « ${w.wol} » signifie : « ${correct} »`;
+  }
+  if (quizIndex < quizItems.length - 1) {
+    document.getElementById('quiz-next-btn').style.display = 'inline-block';
+  } else {
+    fb.textContent += ` | Quiz terminé ! Score : ${quizScore}/${quizItems.length}`;
+  }
+}
+
+function nextQuestion() { quizIndex++; renderQuestion(); }
+function restartQuiz() { initQuiz(); }
+
+// =====================
+// PLANNING
+// =====================
+const days = ['Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam', 'Dim'];
+const dayIcons = ['🔊', '👂', '📚', '💬', '👶', '🌍', '🎵'];
+const dayActivities = ['Phonétique', 'Écoute wolof', 'Vocab médical', 'Tandem', 'Jeu de rôle', 'Culture', 'Révision'];
+let completedDays = JSON.parse(localStorage.getItem('wol_completedDays') || '[]');
+
+function renderPlanning() {
+  const grid = document.getElementById('week-grid');
+  grid.innerHTML = '';
+  days.forEach((day, i) => {
+    const card = document.createElement('div');
+    card.className = 'day-card' + (completedDays.includes(i) ? ' completed' : '');
+    card.innerHTML = `<div class="day-name">${day}</div><div class="day-icon">${dayIcons[i]}</div><div class="day-activity">${dayActivities[i]}</div>`;
+    card.onclick = () => toggleDay(i);
+    grid.appendChild(card);
+  });
+  document.getElementById('streak-num').textContent = completedDays.length;
+}
+
+function toggleDay(i) {
+  const idx = completedDays.indexOf(i);
+  if (idx === -1) completedDays.push(i); else completedDays.splice(idx, 1);
+  localStorage.setItem('wol_completedDays', JSON.stringify(completedDays));
+  renderPlanning();
+}
+
+// =====================
+// INIT
+// =====================
+updateProgress();
+initFlashcards();
+initQuiz();
+renderPlanning();
+</script>
+</body>
+</html>
